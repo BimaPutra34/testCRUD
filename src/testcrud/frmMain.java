@@ -266,13 +266,13 @@ public class frmMain extends javax.swing.JFrame {
         tblData.setForeground(new java.awt.Color(255, 255, 255));
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "NIS", "NamaSiswa", "JenisKelamin", "Kelas", "Email", "Alamat"
+                "NIS", "NamaSiswa", "JenisKelamin", "Kelas", "Email", "Alamat", "Absen", "Status", "Hobi"
             }
         ));
         tblData.setToolTipText("");
@@ -424,7 +424,14 @@ public class frmMain extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        if("".equals(txtNIS.getText()) || "".equals(txtAlamat.getText()) || "".equals(txtKelas.getText()) || "".equals(txtNama.getText()) || "".equals(txtEmail.getText()))
+        if("".equals(txtNIS.getText()) 
+                || "".equals(txtAlamat.getText()) 
+                || "".equals(txtKelas.getText()) 
+                || "".equals(txtNama.getText()) 
+                || "".equals(txtEmail.getText())
+                || "".equals(absen.getText())
+                || "".equals(status.getText())
+                || "".equals(hobi.getText()))
         {
             JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
         } 
@@ -436,7 +443,17 @@ public class frmMain extends javax.swing.JFrame {
                 } else {
                     JK = "P";
                 }
-            String SQL = "INSERT INTO t_siswa (NIS,NamaSiswa,JenisKelamin,Kelas,Email,Alamat)" + "VALUES('" + txtNIS.getText()+"','"+ txtNama.getText()+"','"+ JK +"','"+ txtKelas.getText()+"','"+ txtEmail.getText()+"','"+ txtAlamat.getText()+"')";
+            String SQL = "INSERT INTO t_siswa (NIS,NamaSiswa,JenisKelamin,Kelas,Email,Alamat,Absen,Status,Hobi)" 
+                    + "VALUES('" 
+                    + txtNIS.getText()+"','"
+                    + txtNama.getText()+"','"
+                    + JK +"','"
+                    + txtKelas.getText()+"','"
+                    + txtEmail.getText()+"','"
+                    + txtAlamat.getText()+"','"
+                    +absen.getText()+"','"
+                    +status.getText()+"','"
+                    +hobi.getText()+"')";
             int status = KoneksiDB.execute(SQL);
             if(status==1){
                 JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan", "Sukses", JOptionPane.INFORMATION_MESSAGE);
@@ -472,6 +489,9 @@ public class frmMain extends javax.swing.JFrame {
         buttonGroup1.clearSelection();
         txtEmail.setText("");
         txtAlamat.setText("");
+        hobi.setText("");
+        absen.setText("");
+        status.setText("");
     }//GEN-LAST:event_ResetActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
@@ -496,7 +516,10 @@ public class frmMain extends javax.swing.JFrame {
                 + "JenisKelamin='"+ JK +"' ,"
                 + "Kelas='"+txtKelas.getText()+"' ,"
                 + "Email='"+txtEmail.getText()+"' ,"
-                + "Alamat='"+txtAlamat.getText()
+                + "Alamat='"+txtAlamat.getText()+"' ,"
+                + "Absen='"+absen.getText()+"' ,"
+                + "Status='"+status.getText()+"' ,"
+                + "Hobi='"+hobi.getText()
                 + "' WHERE NIS='"+txtNIS.getText()+"'";
         int status = KoneksiDB.execute(SQL);
         if(status==1){
@@ -522,24 +545,14 @@ public class frmMain extends javax.swing.JFrame {
             txtKelas.setText(tblData.getValueAt(baris, 3).toString());
             txtEmail.setText(tblData.getValueAt(baris, 4).toString());
             txtAlamat.setText(tblData.getValueAt(baris, 5).toString());
+            absen.setText(tblData.getValueAt(baris, 6).toString());
+            status.setText(tblData.getValueAt(baris, 7).toString());
+            hobi.setText(tblData.getValueAt(baris, 8).toString());
         }
     }//GEN-LAST:event_tblDataMouseClickedMouseClicked
 
     private void tblDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataMouseClicked
         // TODO add your handling code here:
-        int baris = tblData.getSelectedRow();
-        if(baris != 1){
-            txtNIS.setText(tblData.getValueAt(baris, 0).toString());
-            txtNama.setText(tblData.getValueAt(baris,1).toString());
-            if("Laki-Laki".equals(tblData.getValueAt(baris, 2).toString())){
-                rbLaki.setSelected(true);
-            }else{
-                rbPerempuan.setSelected(true);
-            }
-            txtKelas.setText(tblData.getValueAt(baris,3).toString());
-            txtEmail.setText(tblData.getValueAt(baris,4).toString());
-            txtAlamat.setText(tblData.getValueAt(baris,5).toString());
-        }
     }//GEN-LAST:event_tblDataMouseClicked
 
     /**
